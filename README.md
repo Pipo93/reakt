@@ -155,53 +155,53 @@ So let's start building!
 
 ### 4. Adding children
 
-- Just like before with the properties, we have to add children to our ReaktElements. To be able to have multiple children, we use the spread operator (`...children`) to create an array of children:
+Just like before with the properties, we have to add children to our ReaktElements. To be able to have multiple children, we use the spread operator (`...children`) to create an array of children:
 
-    ```javascript
-    export function createElement(type, props, ...children) {
-        const reaktElement = {
-            type,
-            props,
-            children,
-        }
-        return reaktElement
+```javascript
+export function createElement(type, props, ...children) {
+    const reaktElement = {
+        type,
+        props,
+        children,
     }
-    ```
+    return reaktElement
+}
+```
   
-- In `renderElement` we can loop over the childrens array. If a child is just a string, we can append a text node to the corresponding DOM element. 
-    Otherwise, `renderElement` is called recursively:
+In `renderElement` we can loop over the childrens array. If a child is just a string, we can append a text node to the corresponding DOM element. 
+Otherwise, `renderElement` is called recursively:
     
-    ```javascript
-    function renderElement(reaktElement) {
-        const { type, props, children } = reaktElement
-    
-        if (typeof type === 'string') {
-            const domElement = document.createElement(type)
-    
-            children.forEach( child => {
-                if (typeof child === 'string') {
-                    domElement.appendChild(document.createTextNode(child))
-                } else {
-                    domElement.appendChild(renderElement(child))
-                }
-            })
-            
-            for( let prop in props) {
-                // ...
-            }
-    
-            return domElement
-        }
-    }
-    ```
+```javascript
+function renderElement(reaktElement) {
+    const { type, props, children } = reaktElement
 
-- Test, if everything works as expected by adding a `h1` and `h2` headline as children of our previously created `div`:
-    ```javascript
-    const App = createElement('div', { id: 'wrapper' },
-        createElement('h1', null, 'Hallo Reakt'),
-        createElement('h2', null, 'I love Reakt')
-    )
-    ```
+    if (typeof type === 'string') {
+        const domElement = document.createElement(type)
+
+        children.forEach( child => {
+            if (typeof child === 'string') {
+                domElement.appendChild(document.createTextNode(child))
+            } else {
+                domElement.appendChild(renderElement(child))
+            }
+        })
+        
+        for( let prop in props) {
+            // ...
+        }
+
+        return domElement
+    }
+}
+```
+
+Test if everything works as expected by adding a `h1` and `h2` headline as children of our previously created `div`:
+```javascript
+const App = createElement('div', { id: 'wrapper' },
+    createElement('h1', null, 'Hallo Reakt'),
+    createElement('h2', null, 'I love Reakt')
+)
+```
   
 ### 5. Adding event handlers as props
 
