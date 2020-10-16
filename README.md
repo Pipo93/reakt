@@ -39,10 +39,17 @@ So let's start building!
     </body>
     </html>
     ```
+- Add a root element to your DOMs body:
+    ```html
+      <body>
+          <div id="root"></div>
+      </body>
+    ```
 - Create an `index.js` file and use a `console.log('Hello Reakt')` inside this file
 - Use this index.js file in your html:
     ```html
       <body>
+          <div id="root"></div>
           <!-- can use es6 modules in vanilla js by using module -> e.g. imports -->
           <script type="module" src="index.js"></script>
       </body>
