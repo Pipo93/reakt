@@ -194,7 +194,13 @@ function renderElement(reaktElement) {
         })
         
         for( let prop in props) {
-            // ...
+            // same as before...
+            // it's a dom element property
+            if (prop in domElement) {
+                domElement[prop] = props[prop]
+            } else {
+                domElement.setAttribute(prop, props[prop])
+            }
         }
 
         return domElement
@@ -293,6 +299,10 @@ function renderElement(reaktElement) {
 Now we can use this component in our app.
 
 ```javascript
+import Header from './components/Header.js'
+ 
+// ...
+ 
 const App = createElement('div', { onClick: () => alert('Clicked') },
     createElement(Header, { text: 'Hello Reakt Header' }, null),
 )
@@ -492,7 +502,7 @@ export default Header
 
 Everything should work as expected. 
 When 'Increment Count!' button is pressed, the callback function is executed and the log message occurs in the console of the browser.
-When cliccking the other button, the callback function is not executed because count did not change.
+When clicking the other button, the callback function is not executed because count did not change.
 
 In summary we can say that like `useState`, `useEffect` can also be considered a standard JavaScript function.
 It gets executed on every render method call and compares the provided dependencies by using a global state.
